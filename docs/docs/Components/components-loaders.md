@@ -80,3 +80,22 @@ This component uses the [Unstructured.io](https://unstructured.io/) Serverless A
 | Name | Display Name | Info |
 | --- | --- | --- |
 | data | Data | List of Data objects containing the parsed content from the input file |
+
+## Polaris AI DataInsight
+
+The PolarisAIDataInsight component uses PolarisAIDataInsightLoader from Langchain to extracts document elements (text, images, complex tables, charts, etc.) from various file formats into structured JSON.
+
+### Inputs
+
+| Name | Display Name | Info |
+| --- | --- | --- |
+| file_path | File | The path to the file to be parsed (supported types are listed [here](https://datainsight.polarisoffice.com/api/reference)) |
+| api_key | API Key | Polaris AI DataInsight API Key (refer to [here](https://datainsight.polarisoffice.com/documentation/quickstart) for how to get the API key) |
+| resources_dir | Directory For Resources | Any images contained in the document as non-text objects will be stored in this directory as separate image files. If the directory does ot exist, it will be created. Defaults to "app/". |
+| mode | Loading Mode | Choose the loading mode. `element` mode loads each element separately. `page` mode loads each page separately. `single` mode loads the entire document as a single object. |
+
+### Outputs
+
+| Name | Display Name | Info |
+| --- | --- | --- |
+| data | Data | List of Data objects containing the parsed content from the input file |
