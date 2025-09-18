@@ -80,7 +80,6 @@ import { OpenSearch } from "@/icons/OpenSearch";
 import { PerplexityIcon } from "@/icons/Perplexity";
 import { PineconeIcon } from "@/icons/Pinecone";
 import { PostgresIcon } from "@/icons/Postgres";
-import { PolarisOfficeIcon } from "./PolarisOffice";
 import { PythonIcon } from "@/icons/Python";
 import { QDrantIcon } from "@/icons/QDrant";
 import { QianFanChatIcon } from "@/icons/QianFanChat";
@@ -114,6 +113,7 @@ import { XAIIcon } from "@/icons/xAI";
 import { YouTubeSvgIcon as YouTubeIcon } from "@/icons/Youtube";
 import { ZepMemoryIcon } from "@/icons/ZepMemory";
 import { JigsawStackIcon } from "./JigsawStack";
+import { PolarisOfficeIcon } from "./PolarisOffice";
 import { WindsurfIcon } from "./Windsurf";
 
 // Export the eagerly loaded icons map
