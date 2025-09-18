@@ -5,7 +5,6 @@ import { FaApple, FaDiscord, FaGithub } from "react-icons/fa";
 import { BotMessageSquareIcon } from "@/icons/BotMessageSquare";
 import { fontAwesomeIcons, isFontAwesomeIcon } from "@/icons/fontAwesomeIcons";
 import { GradientSave } from "@/icons/GradientSparkles";
-import { PolarisOfficeIcon } from "@/icons/PolarisOffice";
 
 const iconCache = new Map<string, any>();
 
@@ -306,6 +305,7 @@ export const SIDEBAR_BUNDLES = [
   { display_name: "Perplexity", name: "perplexity", icon: "Perplexity" },
   { display_name: "pgvector", name: "pgvector", icon: "cpu" },
   { display_name: "Pinecone", name: "pinecone", icon: "Pinecone" },
+  { display_name: "Polaris AI", name: "polarisai", icon: "PolarisOffice" },
   { display_name: "Qdrant", name: "qdrant", icon: "Qdrant" },
   { display_name: "Redis", name: "redis", icon: "Redis" },
   { display_name: "SambaNova", name: "sambanova", icon: "SambaNova" },
@@ -332,7 +332,6 @@ export const SIDEBAR_BUNDLES = [
   { display_name: "Yahoo! Finance", name: "yahoosearch", icon: "trending-up" },
   { display_name: "YouTube", name: "youtube", icon: "YouTube" },
   { display_name: "Zep", name: "zep", icon: "ZepMemory" },
-  { display_name: "Polaris AI", name: "polarisai", icon: "PolarisOffice" },
 ];
 
 export const categoryIcons: Record<string, string> = {
