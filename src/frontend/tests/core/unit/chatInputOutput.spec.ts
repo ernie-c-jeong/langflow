@@ -14,12 +14,12 @@ test("chat_io_teste", { tag: ["@release", "@workspace"] }, async ({ page }) => {
   });
   await page.getByTestId("sidebar-search-input").click();
   await page.getByTestId("sidebar-search-input").fill("chat output");
-  await page.waitForSelector('[data-testid="outputsChat Output"]', {
+  await page.waitForSelector('[data-testid="input_outputChat Output"]', {
     timeout: 2000,
   });
 
   await page
-    .getByTestId("outputsChat Output")
+    .getByTestId("input_outputChat Output")
     .hover()
     .then(async () => {
       await page.getByTestId("add-component-button-chat-output").click();
@@ -27,24 +27,29 @@ test("chat_io_teste", { tag: ["@release", "@workspace"] }, async ({ page }) => {
 
   await page.getByTestId("sidebar-search-input").click();
   await page.getByTestId("sidebar-search-input").fill("chat input");
-  await page.waitForSelector('[data-testid="inputsChat Input"]', {
+  await page.waitForSelector('[data-testid="input_outputChat Input"]', {
     timeout: 2000,
   });
 
   await page
-    .getByTestId("inputsChat Input")
+    .getByTestId("input_outputChat Input")
     .dragTo(page.locator('//*[@id="react-flow-id"]'), {
       targetPosition: { x: 100, y: 100 },
     });
+
+  await page.getByTestId("canvas_controls_dropdown").click();
 
   await page.waitForSelector('[data-testid="fit_view"]', {
     timeout: 100000,
   });
 
   await page.getByTestId("fit_view").click();
+  await page.getByTestId("canvas_controls_dropdown").click();
 
-  await page.getByTestId("handle-chatinput-noshownode-message-source").click();
-  await page.getByTestId("handle-chatoutput-noshownode-text-target").click();
+  await page
+    .getByTestId("handle-chatinput-noshownode-chat message-source")
+    .click();
+  await page.getByTestId("handle-chatoutput-noshownode-inputs-target").click();
 
   await page.getByText("Playground", { exact: true }).last().click();
   await page.waitForSelector('[data-testid="input-chat-playground"]', {
@@ -53,9 +58,7 @@ test("chat_io_teste", { tag: ["@release", "@workspace"] }, async ({ page }) => {
   await page.getByTestId("input-chat-playground").click();
   await page.getByTestId("input-chat-playground").fill("teste");
   await page.getByTestId("button-send").first().click();
-  const chat_input = await page
-    .getByTestId("chat-message-User-teste")
-    .textContent();
+  const chat_input = await page.getByTestId("div-chat-message").textContent();
 
   expect(chat_input).toBe("teste");
 });

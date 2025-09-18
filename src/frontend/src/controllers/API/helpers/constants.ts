@@ -17,15 +17,22 @@ export const URLs = {
   BUILD: `build`,
   CUSTOM_COMPONENT: `custom_component`,
   FLOWS: `flows`,
-  FOLDERS: `folders`,
+  FOLDERS: `projects`,
+  PROJECTS: `projects`,
   VARIABLES: `variables`,
   VALIDATE: `validate`,
   CONFIG: `config`,
   STARTER_PROJECTS: `starter-projects`,
   SIDEBAR_CATEGORIES: `sidebar_categories`,
   ALL: `all`,
-  PUBLIC_FLOW: `/flows/public_flow`,
+  VOICE: `voice`,
+  PUBLIC_FLOW: `flows/public_flow`,
+  MCP: `mcp/project`,
+  MCP_SERVERS: `mcp/servers`,
+  KNOWLEDGE_BASES: `knowledge_bases`,
 } as const;
+
+// IMPORTANT: FOLDERS endpoint now points to 'projects' for backward compatibility
 
 export function getURL(
   key: keyof typeof URLs,
@@ -33,8 +40,10 @@ export function getURL(
   v2: boolean = false,
 ) {
   let url = URLs[key];
-  Object.keys(params).forEach((key) => (url += `/${params[key]}`));
-  return `${v2 ? BASE_URL_API_V2 : BASE_URL_API}${url.toString()}`;
+  for (const paramKey of Object.keys(params)) {
+    url += `/${params[paramKey]}`;
+  }
+  return `${v2 ? BASE_URL_API_V2 : BASE_URL_API}${url}`;
 }
 
 export type URLsType = typeof URLs;

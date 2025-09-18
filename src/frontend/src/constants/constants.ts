@@ -1,7 +1,7 @@
 // src/constants/constants.ts
 
 import custom from "../customization/config-constants";
-import { languageMap } from "../types/components";
+import type { languageMap } from "../types/components";
 
 /**
  * invalid characters for flow name
@@ -37,7 +37,13 @@ export const INVALID_CHARACTERS = [
  * It matches the variables in the text that are between {{}} or {}.
  */
 
-export const regexHighlight = /\{\{(.*?)\}\}|\{([^{}]+)\}/g;
+/**
+ *  p1 – fenced code block ```...```
+ *  p2 – opening brace run (one or more)
+ *  p3 – variable name  (no braces)
+ *  p4 – closing brace run (one or more)
+ */
+export const regexHighlight = /(```[\s\S]*?```)|(\{+)([^{}]+)(\}+)/g;
 export const specialCharsRegex = /[!@#$%^&*()\-_=+[\]{}|;:'",.<>/?\\`´]/;
 
 export const programmingLanguages: languageMap = {
@@ -183,7 +189,7 @@ export const CSVViewErrorTitle = "CSV output";
 
 export const CSVNoDataError = "No data available";
 
-export const PDFViewConstant = "Expand the ouptut to see the PDF";
+export const PDFViewConstant = "Expand the output to see the PDF";
 
 export const CSVError = "Error loading CSV";
 
@@ -551,7 +557,9 @@ export const NOUNS: string[] = [
  */
 export const USER_PROJECTS_HEADER = "My Collection";
 
-export const DEFAULT_FOLDER = "My Projects";
+export const DEFAULT_FOLDER = "Starter Project";
+
+export const MAX_MCP_SERVER_NAME_LENGTH = 30;
 
 /**
  * Header text for admin page
@@ -654,11 +662,18 @@ export const LANGFLOW_SUPPORTED_TYPES = new Set([
   "table",
   "link",
   "slider",
+  "tab",
+  "sortableList",
+  "connect",
+  "auth",
+  "query",
+  "mcp",
+  "tools",
 ]);
 
 export const FLEX_VIEW_TYPES = ["bool"];
 
-export const priorityFields = new Set(["code", "template"]);
+export const priorityFields = new Set(["code", "template", "mode"]);
 
 export const INPUT_TYPES = new Set([
   "ChatInput",
@@ -693,7 +708,7 @@ export const TOOLTIP_HIDDEN_OUTPUTS = "Collapse hidden outputs";
 
 export const ZERO_NOTIFICATIONS = "No new notifications";
 
-export const SUCCESS_BUILD = "Built sucessfully ✨";
+export const SUCCESS_BUILD = "Built successfully ✨";
 
 export const ALERT_SAVE_WITH_API =
   "Caution: Unchecking this box only removes API keys from fields specifically designated for API keys.";
@@ -719,6 +734,8 @@ export const INSERT_API_KEY = "Insert your Langflow API key.";
 export const INVALID_API_KEY = "Your API key is not valid. ";
 export const CREATE_API_KEY = `Don't have an API key? Sign up at`;
 export const STATUS_BUILD = "Build to validate status.";
+export const STATUS_MISSING_FIELDS_ERROR =
+  "Please fill all the required fields.";
 export const STATUS_INACTIVE = "Execution blocked";
 export const STATUS_BUILDING = "Building...";
 export const SAVED_HOVER = "Last saved: ";
@@ -744,8 +761,23 @@ export const BUNDLES_SIDEBAR_FOLDER_NAMES = [
   "assemblyai",
   "LangWatch",
   "langwatch",
-  "Youtube",
+  "YouTube",
   "youtube",
+  "pinecone",
+  "weaviate",
+  "qdrant",
+  "mongodb",
+  "elastic",
+  "supabase",
+  "milvus",
+  "chroma",
+  "clickhouse",
+  "couchbase",
+  "upstash",
+  "vectara",
+  "cassandra",
+  "FAISS",
+  "pgvector",
 ];
 
 export const AUTHORIZED_DUPLICATE_REQUESTS = [
@@ -762,7 +794,9 @@ export const BROKEN_EDGES_WARNING =
 
 export const SAVE_DEBOUNCE_TIME = 300;
 
-export const IS_MAC = navigator.userAgent.toUpperCase().includes("MAC");
+export const IS_MAC =
+  typeof navigator !== "undefined" &&
+  navigator.userAgent.toUpperCase().includes("MAC");
 
 export const defaultShortcuts = [
   {
@@ -950,8 +984,8 @@ export const LANGFLOW_REFRESH_TOKEN = "refresh_token_lf";
 
 export const LANGFLOW_ACCESS_TOKEN_EXPIRE_SECONDS = 60 * 60 - 60 * 60 * 0.1;
 export const LANGFLOW_ACCESS_TOKEN_EXPIRE_SECONDS_ENV =
-  Number(process.env.ACCESS_TOKEN_EXPIRE_SECONDS) -
-  Number(process.env.ACCESS_TOKEN_EXPIRE_SECONDS) * 0.1;
+  Number(process.env?.ACCESS_TOKEN_EXPIRE_SECONDS ?? 60) -
+  Number(process.env?.ACCESS_TOKEN_EXPIRE_SECONDS ?? 60) * 0.1;
 export const TEXT_FIELD_TYPES: string[] = ["str", "SecretStr"];
 export const NODE_WIDTH = 384;
 export const NODE_HEIGHT = NODE_WIDTH * 3;
@@ -963,12 +997,13 @@ export const REFETCH_SERVER_HEALTH_INTERVAL = 20000;
 export const DRAG_EVENTS_CUSTOM_TYPESS = {
   genericnode: "genericNode",
   notenode: "noteNode",
+  "text/plain": "text/plain",
 };
 
 export const NOTE_NODE_MIN_WIDTH = 324;
 export const NOTE_NODE_MIN_HEIGHT = 324;
 export const NOTE_NODE_MAX_HEIGHT = 800;
-export const NOTE_NODE_MAX_WIDTH = 600;
+export const NOTE_NODE_MAX_WIDTH = 1000;
 
 export const COLOR_OPTIONS = {
   amber: "hsl(var(--note-amber))",
@@ -999,6 +1034,7 @@ export const GRADIENT_CLASS_DISABLED =
   "linear-gradient(to right, hsl(var(--muted) / 0.3), hsl(var(--muted)))";
 
 export const RECEIVING_INPUT_VALUE = "Receiving input";
+export const SELECT_AN_OPTION = "Select an option";
 
 export const ICON_STROKE_WIDTH = 1.5;
 
@@ -1006,13 +1042,14 @@ export const DEFAULT_PLACEHOLDER = "Type something...";
 
 export const DEFAULT_TOOLSET_PLACEHOLDER = "Used as a tool";
 
+export const SAVE_API_KEY_ALERT = "API key saved successfully";
 export const PLAYGROUND_BUTTON_NAME = "Playground";
 export const POLLING_MESSAGES = {
   ENDPOINT_NOT_AVAILABLE: "Endpoint not available",
   STREAMING_NOT_SUPPORTED: "Streaming not supported",
 } as const;
 
-export const POLLING_INTERVAL = 100;
+export const BUILD_POLLING_INTERVAL = 25;
 
 export const IS_AUTO_LOGIN =
   !process?.env?.LANGFLOW_AUTO_LOGIN ||
@@ -1020,3 +1057,54 @@ export const IS_AUTO_LOGIN =
 
 export const AUTO_LOGIN_RETRY_DELAY = 2000;
 export const AUTO_LOGIN_MAX_RETRY_DELAY = 60000;
+
+export const ALL_LANGUAGES = [
+  { value: "en-US", name: "English (US)" },
+  { value: "en-GB", name: "English (UK)" },
+  { value: "it-IT", name: "Italian" },
+  { value: "fr-FR", name: "French" },
+  { value: "es-ES", name: "Spanish" },
+  { value: "de-DE", name: "German" },
+  { value: "ja-JP", name: "Japanese" },
+  { value: "pt-BR", name: "Portuguese (Brazil)" },
+  { value: "zh-CN", name: "Chinese (Simplified)" },
+  { value: "ru-RU", name: "Russian" },
+  { value: "ar-SA", name: "Arabic" },
+  { value: "hi-IN", name: "Hindi" },
+];
+
+export const DEBOUNCE_FIELD_LIST = [
+  "SecretStrInput",
+  "MessageTextInput",
+  "TextInput",
+  "MultilineInput",
+  "SecretStrInput",
+  "IntInput",
+  "FloatInput",
+  "SliderInput",
+];
+
+export const OPENAI_VOICES = [
+  { name: "alloy", value: "alloy" },
+  { name: "ash", value: "ash" },
+  { name: "ballad", value: "ballad" },
+  { name: "coral", value: "coral" },
+  { name: "echo", value: "echo" },
+  { name: "sage", value: "sage" },
+  { name: "shimmer", value: "shimmer" },
+  { name: "verse", value: "verse" },
+];
+
+export const DEFAULT_POLLING_INTERVAL = 5000;
+export const DEFAULT_TIMEOUT = 30000;
+export const DEFAULT_FILE_PICKER_TIMEOUT = 60000;
+export const DISCORD_URL = "https://discord.com/invite/EqksyE2EX9";
+export const GITHUB_URL = "https://github.com/langflow-ai/langflow";
+export const TWITTER_URL = "https://x.com/langflow_ai";
+export const DOCS_URL = "https://docs.langflow.org";
+export const DATASTAX_DOCS_URL =
+  "https://docs.datastax.com/en/langflow/index.html";
+export const DESKTOP_URL = "https://www.langflow.org/desktop";
+export const BUG_REPORT_URL = "https://github.com/langflow-ai/langflow/issues";
+
+export const UUID_PARSING_ERROR = "uuid_parsing";

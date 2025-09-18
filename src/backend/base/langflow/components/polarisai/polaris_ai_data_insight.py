@@ -37,7 +37,7 @@ class PolarisAIDataInsightComponent(Component):
             info=(
                 "Any images contained in the document as non-text objects will be "
                 "stored in this directory as separate image files. If the directory does not exist, it will be created."
-                " Defaults to \"app/\"."
+                " Defaults to \"tmp/\"."
             ),
             required=True
         ),

@@ -277,8 +277,7 @@ src/frontend/temp
 
 .dspy_cache/
 *.db
+*.mcp.json
 
-
-# local files
-app/
-app/*
+news-aggregated.json
+CLAUDE.md

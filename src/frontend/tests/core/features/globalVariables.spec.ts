@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { adjustScreenView } from "../../utils/adjust-screen-view";
 import { awaitBootstrapTest } from "../../utils/await-bootstrap-test";
+import { initialGPTsetup } from "../../utils/initialGPTsetup";
 
 test(
   "user must be able to save or delete a global variable",
@@ -15,17 +15,28 @@ test(
     await page.getByTestId("sidebar-search-input").click();
     await page.getByTestId("sidebar-search-input").fill("openai");
 
-    await page.waitForSelector('[data-testid="modelsOpenAI"]', {
+    await page.waitForSelector('[data-testid="openaiOpenAI"]', {
       timeout: 1000,
     });
 
     await page
-      .getByTestId("modelsOpenAI")
-      .dragTo(page.locator('//*[@id="react-flow-id"]'));
-    await page.mouse.up();
-    await page.mouse.down();
+      .getByTestId("openaiOpenAI")
+      .hover()
+      .then(async () => {
+        await page.getByTestId("add-component-button-openai").last().click();
+      });
 
-    await adjustScreenView(page);
+    await page.getByTestId("canvas_controls_dropdown").click();
+
+    await page.getByTestId("fit_view").click();
+    await page.getByTestId("canvas_controls_dropdown").click();
+
+    await initialGPTsetup(page, {
+      skipAdjustScreenView: true,
+      skipUpdateOldComponents: true,
+      skipAddNewApiKeys: true,
+      skipSelectGptModel: true,
+    });
 
     const genericName = Math.random().toString();
     const credentialName = Math.random().toString();
